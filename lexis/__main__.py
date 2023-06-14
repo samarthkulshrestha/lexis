@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup as bs
 import requests as req
 
 E_URL = "https://www.etymonline.com/search?q="
+W_URL = "https://en.wiktionary.org/wiki/Special:Search?go=Look+up&search="
 
 
 def search_eo(term):
@@ -19,5 +20,19 @@ def search_eo(term):
 
     return wds
 
+def search_wk(term):
+    url = W_URL + str(term)
+    source = req.get(url).text
+    soup = bs(source, "lxml")
+
+    wds = []
+
+    word = soup.find("h1", class_="firstHeading").text
+    meaning = soup.find("div", class_="mw-parser-output").p.text
+    wd = {"word": word, "meaning": meaning, "source": "wiktionary"}
+    wds.append(wd)
+
+    return wds
+
 inp = input("enter word: ")
-print(search_eo(inp))
+print(search_wk(inp))
