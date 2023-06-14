@@ -3,6 +3,7 @@ import requests as req
 
 E_URL = "https://www.etymonline.com/search?q="
 W_URL = "https://en.wiktionary.org/wiki/Special:Search?go=Look+up&search="
+I_URL = "https://wordinfo.info/results?searchString="
 
 
 def search_eo(term):
@@ -34,5 +35,19 @@ def search_wk(term):
 
     return wds
 
+def search_wi(term):
+    url = I_URL + str(term)
+    source = req.get(url).text
+    soup = bs(source, "lxml")
+
+    wds = []
+
+    word = soup.find("div", class_="title").text
+    meaning = soup.find("div", class_="definition").text
+    wd = {"word": word, "meaning": meaning, "source": "wordinfo"}
+    wds.append(wd)
+
+    return wds
+
 inp = input("enter word: ")
-print(search_wk(inp))
+print(search_wi(inp))
