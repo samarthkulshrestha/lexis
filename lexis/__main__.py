@@ -49,5 +49,13 @@ def search_wi(term):
 
     return wds
 
+def search_def(term):
+    eo = search_eo(term)
+    wk = search_wk(term)
+    wi = search_wi(term)
+    wds = eo + wk + wi
+
+    return wds
+
 inp = input("enter word: ")
-print(search_wi(inp))
+print(search_def(inp))
