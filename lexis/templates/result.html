@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %} search {% endblock %}
+
+{% block content %}
+<h2>{{ word }}</h2>
+<div>
+    {% for d in defn %}
+    <h5>{{ d.source|safe }}</h5>
+    <p>{{ d.meaning|safe }}</p>
+    <hr />
+    {% endfor %}
+</div>
+{% endblock %}
